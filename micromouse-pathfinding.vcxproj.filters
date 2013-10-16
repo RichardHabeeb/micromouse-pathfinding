@@ -24,7 +24,7 @@
     <ClCompile Include="cell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="junction.cpp">
+    <ClCompile Include="passage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,7 +35,7 @@
     <ClInclude Include="cell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="junction.h">
+    <ClInclude Include="passage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
