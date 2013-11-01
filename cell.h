@@ -6,32 +6,24 @@ typedef enum
 	east,
 	south, 
 	west,
+	NUM_HEADINGS,
 } heading;
-#define NUM_HEADINGS 4
 
-class passage;
+#define get_reverse_heading( h )	( h+2 ) % NUM_HEADINGS
+
 
 class cell
 {
 public:
 	cell(void);
-	cell(int, int);
 	~cell(void);
-
 	bool	is_wall(heading);
 	void	set_wall(heading);
-	void	set_passage(heading, passage*);
-	float	get_time(heading);
-	cell	adjacent_cell(heading);
-	float	adjacent_cell_time(heading);
-	friend bool operator== (cell &c1, cell &c2);
+	cell*	get_adjacent_cell(heading);
+	void	set_adjacent_cell(heading, cell*);
 
-	bool visited;
+	bool	visited;
 
 private:
-	passage* adjacent_passages[4];
-	int row;
-	int col;
-	
+	cell* adjacent_cells[4];
 };
-

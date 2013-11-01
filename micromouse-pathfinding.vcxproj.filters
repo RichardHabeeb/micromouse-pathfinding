@@ -24,18 +24,12 @@
     <ClCompile Include="cell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="passage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="maze.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cell.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="passage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
