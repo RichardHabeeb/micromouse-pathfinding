@@ -42,5 +42,7 @@ cell* cell::get_adjacent_cell( heading h )
 
 void cell::set_adjacent_cell( heading h, cell* c )
 {
+	if(c != nullptr)
+		c->adjacent_cells[get_reverse_heading(h)] = this;
 	adjacent_cells[ h ] = c;
 }
