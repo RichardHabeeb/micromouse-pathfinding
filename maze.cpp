@@ -13,6 +13,8 @@ maze::maze(int _num_rows, int _num_cols)
 		for (int c = 0; c < num_cols; c++)
 		{
 			cell_index[r][c] = new cell();
+			cell_index[r][c]->set_value(0);
+			cell_index[r][c]->set_visited(false);
 
 			if (c > 0)
 			{
@@ -25,6 +27,7 @@ maze::maze(int _num_rows, int _num_cols)
 			}
 		}
 	}
+	map(reset_cell_value);
 }
 
 
@@ -96,7 +99,7 @@ void maze::swap_starting_and_goal(void)
 
 char* maze::to_string(void)
 {
-	char* s = new char[num_rows*(num_cols*(NUM_HEADINGS + 1) + 1)];
+	char* s = new char[num_rows*(num_cols*(NUM_HEADINGS + 4) + 1)];
 	int write_index = 0;
 	char heading_names[] = "NESW";
 
@@ -108,10 +111,32 @@ char* maze::to_string(void)
 			{
 				s[write_index++] = (cell_index[r][c]->is_wall(h)) ? heading_names[h] : ' ';
 			}
+			s[write_index++] = (cell_index[r][c]->get_visited()) ? '!' : ' ';
+			s[write_index++] = '0' + cell_index[r][c]->get_value() / 10;
+			s[write_index++] = '0' + cell_index[r][c]->get_value() % 10;
 			s[write_index++] = is_goal_cell(r,c) ? '#' : '|';
 		}
 		s[write_index++] = '\n';
 	}
 	s[write_index] = '\0';
 	return s;
+}
+
+
+
+void maze::reset_cell_value(cell* c)
+{
+	c->set_value(0);
+}
+
+
+void maze::map(void(*func)(cell*))
+{
+	for (int r = 0; r < num_rows; r++)
+	{
+		for (int c = 0; c < num_cols; c++)
+		{
+			(*func)(cell_index[r][c]);
+		}
+	}
 }
