@@ -1,12 +1,17 @@
 #include "maze.h"
 
 
-maze::maze(int _num_rows, int _num_cols)
+maze::maze
+	(
+		int					num_rows, 
+		int					num_cols
+	) :
+	num_rows(num_rows),
+	num_cols(num_cols)
 {
-	num_rows = _num_rows;
-	num_cols = _num_cols;
 	
-	cell_index = new cell**[num_rows];
+	cell_index				= new cell**[num_rows];
+
 	for (int r = 0; r < num_rows; r++)
 	{
 		cell_index[r]= new cell*[num_cols];
@@ -27,21 +32,37 @@ maze::maze(int _num_rows, int _num_cols)
 			}
 		}
 	}
-	map(reset_cell_value);
+	Map(ResetCellValue);
 }
 
 
-maze::~maze(void)
+
+maze::~maze
+	(
+		void
+	)
 {
+	delete cell_index;
 }
 
 
-bool maze::is_valid_cell(int r, int c)
+
+bool maze::is_valid_cell
+	(
+		int		r, 
+		int		c
+	)
 {
 	return (r < num_rows && r >= 0 && c < num_cols && c >= 0);
 }
 
-cell* maze::get_cell(int r, int c)
+
+
+cell* maze::get_cell
+	(
+		int r,
+		int c
+	)
 {
 	if (is_valid_cell(r,c))
 		return cell_index[r][c];
@@ -49,47 +70,33 @@ cell* maze::get_cell(int r, int c)
 		return nullptr;
 }
 
-cell* maze::get_starting_cell(void)
-{
-	return starting_cell;
-}
 
-void maze::set_starting_cell(cell* c)
-{
-	starting_cell = c;
-}
 
-void maze::set_starting_cell(int r, int c)
-{
-	starting_cell = cell_index[r][c];
-}
-
-cell* maze::get_goal_cell(void)
-{
-	return goal_cell;
-}
-
-void maze::set_goal_cell(cell* c)
-{
-	goal_cell = c;
-}
-
-void maze::set_goal_cell(int r, int c)
-{
-	goal_cell = cell_index[r][c];
-}
-
-bool maze::is_goal_cell(int r, int c)
+bool maze::IsGoalCell
+	(
+		int r,
+		int c
+	)
 {
 	return cell_index[r][c] == goal_cell;
 }
 
-bool maze::is_goal_cell(cell* c)
+
+
+bool maze::IsGoalCell
+	(
+		cell* c
+	)
 {
 	return c == goal_cell;
 }
 
-void maze::swap_starting_and_goal(void)
+
+
+void maze::SwapStartingAndGoal
+(
+	void
+)
 {
 	cell* t = starting_cell;
 	starting_cell = goal_cell;
@@ -97,7 +104,11 @@ void maze::swap_starting_and_goal(void)
 }
 
 
-char* maze::to_string(void)
+
+char* maze::ToString
+	(
+		void
+	)
 {
 	char* s = new char[num_rows*(num_cols*(NUM_HEADINGS + 4) + 1)];
 	int write_index = 0;
@@ -109,12 +120,12 @@ char* maze::to_string(void)
 		{
 			for (heading h = north; h < NUM_HEADINGS; h++) 
 			{
-				s[write_index++] = (cell_index[r][c]->is_wall(h)) ? heading_names[h] : ' ';
+				s[write_index++] = (cell_index[r][c]->IsWall(h)) ? heading_names[h] : ' ';
 			}
 			s[write_index++] = (cell_index[r][c]->get_visited()) ? '!' : ' ';
 			s[write_index++] = '0' + cell_index[r][c]->get_value() / 10;
 			s[write_index++] = '0' + cell_index[r][c]->get_value() % 10;
-			s[write_index++] = is_goal_cell(r,c) ? '#' : '|';
+			s[write_index++] = IsGoalCell(r,c) ? '#' : '|';
 		}
 		s[write_index++] = '\n';
 	}
@@ -124,13 +135,19 @@ char* maze::to_string(void)
 
 
 
-void maze::reset_cell_value(cell* c)
+void maze::ResetCellValue
+	(
+		cell* c
+	)
 {
 	c->set_value(0);
 }
 
 
-void maze::map(void(*func)(cell*))
+void maze::Map
+	(
+		void (*func)(cell*)
+	)
 {
 	for (int r = 0; r < num_rows; r++)
 	{

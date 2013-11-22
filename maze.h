@@ -4,35 +4,152 @@
 class maze
 {
 public:
-	maze(int, int);
-	~maze(void);
-
-	bool	is_valid_cell(int, int);
-	cell*	get_cell(int, int);
-	int		get_num_rows(void) { return num_rows; }
-	void	set_num_rows(int r) { num_rows = r;  }
-	int		get_num_cols(void) { return num_cols; }
-	void	set_num_cols(int c) { num_cols = c; }
-	cell*	get_starting_cell( void );
-	void	set_starting_cell(int, int);
-	void	set_starting_cell(cell*);
-	cell*	get_goal_cell( void );
-	void	set_goal_cell(int, int);
-	void	set_goal_cell(cell*);
-	bool	is_goal_cell(cell*);
-	bool	is_goal_cell(int, int);
-	void	swap_starting_and_goal( void );
-	void	map(void(*func)(cell*));
-	char*	to_string( void );
+	maze
+	(
+		int _num_rows,
+		int _num_cols
+	);
 
 
-	static void		reset_cell_value(cell*);
+	~maze
+	(
+		void
+	);
+
+
+	bool is_valid_cell
+	(
+		int		r,
+		int		c
+	);
+
+
+	cell* get_cell
+	(
+		int r,
+		int c
+	);
+
+
+	int	get_num_rows
+	(
+		void
+	) const
+	{ 
+		return num_rows; 
+	}
+
+
+	void set_num_rows
+	(
+		int r
+	)
+	{
+		num_rows = r;  
+	}
+
+
+	int get_num_cols
+	(
+		void
+	) const
+	{ 
+		return num_cols; 
+	}
+
+
+	void set_num_cols
+	(
+		int c
+	) 
+	{
+		num_cols = c;
+	}
+
+
+	cell* get_starting_cell
+	(
+		void
+	) const
+	{
+		return starting_cell;
+	};
+
+
+	void set_starting_cell
+	(
+		int r,
+		int c
+	)
+	{
+		starting_cell = cell_index[r][c];
+	}
+
+
+	cell* get_goal_cell
+	(
+		void
+	) const
+	{
+		return goal_cell;
+	}
+
+
+	void set_goal_cell
+	(
+		int r,
+		int c
+	)
+	{
+		goal_cell = cell_index[r][c];
+	}
+
+	
+	bool IsGoalCell
+	(
+		cell*
+	);
+
+
+	bool IsGoalCell
+	(
+		int r,
+		int c
+	);
+
+
+	void SwapStartingAndGoal
+	(
+		void
+	);
+
+
+	void Map
+	(
+		void (*func)(cell*)
+	);
+
+
+	char* ToString
+	(
+		void
+	);
+
+
+	static void	ResetCellValue
+	(
+		cell*
+	);
+
 
 private:
+
 	int		num_rows;
 	int		num_cols;
 	cell*	starting_cell;
 	cell*	goal_cell;
 	cell*** cell_index;
+
+
 };
 

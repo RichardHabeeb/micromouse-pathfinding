@@ -15,18 +15,77 @@ enum
 class cell
 {
 public:
-				cell(void);
-				~cell(void);
-	bool		is_wall(heading);
-	void		set_wall(heading);
-	cell*		get_adjacent_cell(heading);
-	void		set_adjacent_cell(heading, cell*);
-	bool		get_visited(void)		{ return visited; }
-	void		set_visited(bool v)		{ visited = v; }
-	int			get_value(void)			{ return value; }
-	void		set_value(short int v)	{ value = v; }
+	cell
+	(
+		void
+	);
 
+
+	~cell
+	(
+		void
+	);
 	
+
+	void set_wall
+	(
+		heading h
+	);
+
+
+	cell* get_adjacent_cell
+	(
+		heading
+	);
+
+
+	void set_adjacent_cell
+	(
+		heading h,
+		cell* c
+	);
+
+
+	bool get_visited
+	(
+		void
+	) const
+	{
+		return visited;
+	}
+
+
+	void set_visited
+	(
+		bool v
+	)
+	{
+		visited = v;
+	}
+
+
+	int	 get_value
+	(
+		void
+	) const
+	{
+		return value;
+	}
+
+
+	void set_value
+	(
+		short int v
+	)
+	{
+		value = v;
+	}
+
+	bool IsWall
+	(
+		heading h
+	);
+
 
 private:
 	cell*			adjacent_cells[4];

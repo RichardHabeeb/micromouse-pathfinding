@@ -14,11 +14,15 @@ cell::cell(void)
 
 cell::~cell(void)
 {
-
+	for (heading h = north; h < NUM_HEADINGS; h++)
+	{
+		if (adjacent_cells[h] != nullptr)
+			delete adjacent_cells;
+	}		
 }
 
 
-bool cell::is_wall( heading h )
+bool cell::IsWall(heading h)
 {
 	return ( adjacent_cells[ h ] == nullptr );
 }
@@ -26,7 +30,7 @@ bool cell::is_wall( heading h )
 
 void cell::set_wall( heading h )
 {
-	if ( !is_wall( h ) )
+	if (!IsWall(h))
 	{
 		adjacent_cells[ h ]->adjacent_cells[ get_reverse_heading( h ) ] = nullptr;
 		adjacent_cells[ h ] = nullptr;

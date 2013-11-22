@@ -16,11 +16,11 @@ int main()
 
 	m->set_starting_cell(0, 0);
 	m->set_goal_cell(8, 8);
-	cout << m->to_string() << "\n";
+	cout << m->ToString() << "\n";
 	
-	unsigned int num_steps = ai->CalculateBestRoute(paths, (unsigned int)longest_path, north);
+	unsigned int num_steps = ai->CalculateBestRoute(paths, (unsigned int)longest_path, 0, 0, north);
 
-	cout << m->to_string() << "\n";
+	cout << m->ToString() << "\n";
 
 
 	for (int i = 0; i < num_steps; i++)
