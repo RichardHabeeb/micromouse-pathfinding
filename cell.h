@@ -90,5 +90,6 @@ public:
 private:
 	cell*			adjacent_cells[4];
 	unsigned int	value;
+	void*			data;
 	bool			visited;
 };

@@ -82,12 +82,15 @@
     <ClCompile Include="maze.cpp" />
     <ClCompile Include="pathfinding.cpp" />
     <ClCompile Include="SimpleFloodFill.cpp" />
+    <ClCompile Include="WeightedPathfinding.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cell.h" />
     <ClInclude Include="IPathFinding.h" />
     <ClInclude Include="maze.h" />
+    <ClInclude Include="Queue.h" />
     <ClInclude Include="SimpleFloodFill.h" />
+    <ClInclude Include="WeightedPathfinding.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

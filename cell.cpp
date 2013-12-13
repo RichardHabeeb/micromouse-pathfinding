@@ -17,7 +17,7 @@ cell::~cell(void)
 	for (heading h = north; h < NUM_HEADINGS; h++)
 	{
 		if (adjacent_cells[h] != nullptr)
-			delete adjacent_cells;
+			delete[] adjacent_cells;
 	}		
 }
 

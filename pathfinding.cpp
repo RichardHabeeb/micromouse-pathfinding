@@ -23,7 +23,7 @@ int main()
 	cout << m->ToString() << "\n";
 
 
-	for (int i = 0; i < num_steps; i++)
+	for (unsigned int i = 0; i < num_steps; i++)
 	{
 		cout << ((paths[i] == north) ? "north" : ((paths[i] == east) ? "east" : ((paths[i] == south) ? "south" : "west")));	
 		cout << endl;
