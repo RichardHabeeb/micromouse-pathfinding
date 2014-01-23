@@ -81,6 +81,25 @@ public:
 		value = v;
 	}
 
+
+	void* get_data
+		(
+		void
+		) const
+	{
+		return data;
+	}
+
+
+	void set_data
+		(
+		void* d
+		)
+	{
+		data = d;
+	}
+
+
 	bool IsWall
 	(
 		heading h
