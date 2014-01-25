@@ -12,7 +12,7 @@ int main()
 
 	maze* m					= new maze(16, 16);
 	IPathFinding* ai		= new SimpleFloodFill(m);
-	IPathFinding* ai2		= new WeightedPathfinding(m);
+	//IPathFinding* ai2		= new WeightedPathfinding(m);
 	heading	paths[longest_path];
 
 

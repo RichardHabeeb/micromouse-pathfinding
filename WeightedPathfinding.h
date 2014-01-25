@@ -1,5 +1,6 @@
 #pragma once
 #include "IPathFinding.h"
+#include "util_math.h"
 #include "Queue.h"
 
 
@@ -7,17 +8,16 @@
  * Algorithm Constants 
  * (used for speedup estimates)
  ***********************************************/
-#define			TURN_TIME			500		//ms (time to turn the robot 90 degrees)
-#define			MAX_CELL_TIME		100		//ms (fastest possible cell-to-cell travel time
-#define			MIN_CELL_TIME		1000	//ms (slowest possible cell-to-cell travel time
-#define			ACCELERATION_TIME	1500	//ms (time to get to full speed
+#define			STEP_WEIGHT			100
+#define			VISITED_STEP_WEIGHT	50
+#define			TURN_WEIGHT			200		//ms (time to turn the robot 90 degrees)
 
 
 typedef struct 
 {
 	int					weight;
-	heading				curr_head;
-	unsigned int		cells_traveled;
+	heading				robot_heading_sim;
+	cell*				prev_cell;
 } cell_data_t;
 
 
@@ -52,8 +52,9 @@ private:
 
 public:
 private:
-	Queue<cell>	cell_q;
-	unsigned int max_flood_depth;
-	maze* m;
+	Queue<cell>		cell_q;
+	unsigned int	max_flood_depth;
+	maze*			m;
+	unsigned int	maze_max_dim;
 };
 

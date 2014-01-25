@@ -7,6 +7,8 @@ WeightedPathfinding::WeightedPathfinding
 	)
 {
 	this->m = m;
+	maze_max_dim = Maximum(m->get_num_cols(), m->get_num_rows());
+
 }
 
 
@@ -34,19 +36,23 @@ unsigned int WeightedPathfinding::CalculateBestRoute
 	while (cell_q.get_count() > 0)
 	{
 		cell*				current_cell			= cell_q.Dequeue();
+		cell_data_t*		current_cell_data		= (cell_data_t*)current_cell->get_data();
 		
 		for (heading h = north; h < NUM_HEADINGS; h++)
 		{
 			cell*			adjacent_cell			= current_cell->get_adjacent_cell(h);
 			cell_data_t*	adjacent_cell_data		= (cell_data_t*)adjacent_cell->get_data();
-			cell_data_t		new_adjacent_cell_data	= CalculateStepWeight(current_cell, h);
 
-			if (adjacent_cell != nullptr && 
-				adjacent_cell_data->weight > new_adjacent_cell_data.weight)
+			unsigned int new_weight = current_cell_data->weight
+				+ (h != current_cell_data->robot_heading_sim)*TURN_WEIGHT
+				+ (adjacent_cell->get_visited()) ? VISITED_STEP_WEIGHT : STEP_WEIGHT;
+
+			if (adjacent_cell != nullptr 
+				&& adjacent_cell_data->weight < new_weight)
 			{
-				adjacent_cell_data->weight			= new_adjacent_cell_data.weight;
-				adjacent_cell_data->cells_traveled	= new_adjacent_cell_data.cells_traveled;
-				adjacent_cell_data->curr_head		= new_adjacent_cell_data.curr_head;
+				adjacent_cell_data->weight				= new_weight;
+				adjacent_cell_data->robot_heading_sim	= h;
+				adjacent_cell_data->prev_cell			= current_cell;
 				cell_q.Enqueue(adjacent_cell);
 			}
 		}
@@ -56,32 +62,3 @@ unsigned int WeightedPathfinding::CalculateBestRoute
 }
 
 
-cell_data_t WeightedPathfinding::CalculateStepWeight
-	(
-		cell*				step_origin,
-		heading				step_heading
-	)
-{
-	cell_data_t ret;
-	cell_data_t* origin_cell_data = (cell_data_t*)step_origin->get_data();
-	//d = v*t;
-	//d = at ^ 2 + v0t
-	// 0 = a*t^2 + v_0*t - d
-	// t = -v_0/2/a +/- sqrt(v_0^2 - 4*a*d)/2/a
-
-	//int acceleration = (1/MIN_CELL_TIME - 1/MAX_CELL_TIME) / ACCELERATION_TIME; //this is always zero... because ints
-	//int time_to_this_cell = -1 / (2* MAX_CELL_TIME )
-	//int	current_velocity = acceleration * time_to_this_cell;
-
-
-
-	//origin_cell_data->cells_traveled*
-
-	//(origin_cell_data->curr_head - step_heading)*TURN_TIME;
-
-	ret.cells_traveled = (step_heading == origin_cell_data->curr_head) ? origin_cell_data->cells_traveled + 1 : 0;
-	ret.curr_head = step_heading;
-	ret.weight = origin_cell_data->weight + 100; //this is where the magic needs to happen
-
-	return ret;
-}

@@ -90,6 +90,7 @@
     <ClInclude Include="maze.h" />
     <ClInclude Include="Queue.h" />
     <ClInclude Include="SimpleFloodFill.h" />
+    <ClInclude Include="util_math.h" />
     <ClInclude Include="WeightedPathfinding.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
