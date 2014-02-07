@@ -144,6 +144,15 @@ void maze::ResetCellValue
 }
 
 
+void maze::ResetCellData
+(
+cell* c
+)
+{
+	c->set_value(0);
+}
+
+
 void maze::Map
 	(
 		void (*func)(cell*)

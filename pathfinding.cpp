@@ -12,7 +12,7 @@ int main()
 
 	maze* m					= new maze(16, 16);
 	IPathFinding* ai		= new SimpleFloodFill(m);
-	//IPathFinding* ai2		= new WeightedPathfinding(m);
+	IPathFinding* ai2		= new WeightedPathfinding(m);
 	heading	paths[longest_path];
 
 
@@ -28,6 +28,17 @@ int main()
 	for (unsigned int i = 0; i < num_steps; i++)
 	{
 		cout << ((paths[i] == north) ? "north" : ((paths[i] == east) ? "east" : ((paths[i] == south) ? "south" : "west")));	
+		cout << endl;
+	}
+
+
+	num_steps = ai2->CalculateBestRoute(paths, (unsigned int)longest_path, 0, 0, north);
+
+	cout << ((WeightedPathfinding*)ai2)->ToString() << "\n";
+
+	for (unsigned int i = 0; i < num_steps; i++)
+	{
+		cout << ((paths[i] == north) ? "north" : ((paths[i] == east) ? "east" : ((paths[i] == south) ? "south" : "west")));
 		cout << endl;
 	}
 

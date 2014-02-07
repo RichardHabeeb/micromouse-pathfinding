@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cell.h" />
+    <ClInclude Include="Heading.h" />
     <ClInclude Include="IPathFinding.h" />
     <ClInclude Include="maze.h" />
     <ClInclude Include="Queue.h" />

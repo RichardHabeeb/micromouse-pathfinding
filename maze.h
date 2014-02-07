@@ -141,6 +141,11 @@ public:
 		cell*
 	);
 
+	static void	ResetCellData
+	(
+		cell*
+	);
+
 
 private:
 

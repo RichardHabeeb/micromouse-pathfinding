@@ -8,9 +8,10 @@
  * Algorithm Constants 
  * (used for speedup estimates)
  ***********************************************/
-#define			STEP_WEIGHT			100
-#define			VISITED_STEP_WEIGHT	50
-#define			TURN_WEIGHT			200		//ms (time to turn the robot 90 degrees)
+#define			STEP_WEIGHT			2
+#define			VISITED_STEP_WEIGHT	1
+#define			TURN_WEIGHT			4
+#define			INITIAL_WEIGHT		-1
 
 
 typedef struct 
@@ -41,14 +42,20 @@ public:
 		heading				robot_current_heading
 		);
 
+	char* ToString
+		(void);
+
 
 private:
-	cell_data_t CalculateStepWeight
+	static void InitializeCellData
 		(
-		cell*				step_origin,
-		heading				step_heading
+		cell *
 		);
 
+	static void WeightedPathfinding::ResetCellData
+		(
+		cell *
+		);
 
 public:
 private:

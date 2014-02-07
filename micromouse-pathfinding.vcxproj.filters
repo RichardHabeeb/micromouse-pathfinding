@@ -53,5 +53,8 @@
     <ClInclude Include="util_math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Heading.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

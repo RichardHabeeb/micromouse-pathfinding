@@ -1,15 +1,5 @@
 #pragma once
-typedef unsigned char heading;
-enum
-{
-	north,
-	east,
-	south, 
-	west,
-	NUM_HEADINGS,
-};
-
-#define get_reverse_heading( h )	( h+2 ) % NUM_HEADINGS
+#include "Heading.h"
 
 
 class cell
