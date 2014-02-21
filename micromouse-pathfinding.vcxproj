@@ -81,16 +81,16 @@
     <ClCompile Include="cell.cpp" />
     <ClCompile Include="maze.cpp" />
     <ClCompile Include="pathfinding.cpp" />
-    <ClCompile Include="SimpleFloodFill.cpp" />
+    <ClCompile Include="simplefloodfill.cpp" />
     <ClCompile Include="WeightedPathfinding.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cell.h" />
-    <ClInclude Include="Heading.h" />
-    <ClInclude Include="IPathFinding.h" />
+    <ClInclude Include="heading.h" />
+    <ClInclude Include="ipathfinding.h" />
     <ClInclude Include="maze.h" />
-    <ClInclude Include="Queue.h" />
-    <ClInclude Include="SimpleFloodFill.h" />
+    <ClInclude Include="queue.h" />
+    <ClInclude Include="simplefloodfill.h" />
     <ClInclude Include="util_math.h" />
     <ClInclude Include="WeightedPathfinding.h" />
   </ItemGroup>

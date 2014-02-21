@@ -1,80 +1,50 @@
-#pragma once
+/****************************************************************************************
+* File: maze.h
+*
+* Description: Header file for maze.cpp
+*
+* Created: 2/20/2014, by Richard Habeeb
+****************************************************************************************/
+
+#ifndef MAZE_INCLUDED_H
+#define MAZE_INCLUDED_H
+
+/*---------------------------------------------------------------------------------------
+*                                       INCLUDES
+*--------------------------------------------------------------------------------------*/
 #include "cell.h"
 
-class maze
+/*---------------------------------------------------------------------------------------
+*                                      CONSTANTS
+*--------------------------------------------------------------------------------------*/
+#define MAZE_NUM_ROWS	16
+#define MAZE_NUM_COLS	16
+
+/*---------------------------------------------------------------------------------------
+*                                        TYPES
+*--------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------
+*                                       CLASSES
+*--------------------------------------------------------------------------------------*/
+
+/******************************************************************************
+* Class: Maze
+*
+* Description:	This class represents a maze. It is built up of a 4-way linked
+*				list of cells (forming a "grid" in the heap). This structure
+*				is held by a 2d array (for fast indexing of cells).
+******************************************************************************/
+class Maze
 {
-public:
-	maze
-	(
-		int _num_rows,
-		int _num_cols
-	);
+public: // methods
+	Maze(void);
+	~Maze(void);
 
-
-	~maze
-	(
-		void
-	);
-
-
-	bool is_valid_cell
-	(
-		int		r,
-		int		c
-	);
-
-
-	cell* get_cell
-	(
-		int r,
-		int c
-	);
-
-
-	int	get_num_rows
-	(
-		void
-	) const
-	{ 
-		return num_rows; 
-	}
-
-
-	void set_num_rows
-	(
-		int r
-	)
-	{
-		num_rows = r;  
-	}
-
-
-	int get_num_cols
-	(
-		void
-	) const
-	{ 
-		return num_cols; 
-	}
-
-
-	void set_num_cols
-	(
-		int c
-	) 
-	{
-		num_cols = c;
-	}
-
-
-	cell* get_starting_cell
-	(
-		void
-	) const
+	Cell* get_starting_cell(void) const
 	{
 		return starting_cell;
-	};
-
+	}
 
 	void set_starting_cell
 	(
@@ -86,14 +56,10 @@ public:
 	}
 
 
-	cell* get_goal_cell
-	(
-		void
-	) const
+	Cell* get_goal_cell(void) const
 	{
 		return goal_cell;
 	}
-
 
 	void set_goal_cell
 	(
@@ -104,57 +70,55 @@ public:
 		goal_cell = cell_index[r][c];
 	}
 
-	
-	bool IsGoalCell
+
+	Cell* get_cell
 	(
-		cell*
+		int r,
+		int c
 	);
 
+	// Determine if a cell coords are within the bounds of the maze
+	bool IsValidCell
+	(
+		int		r,
+		int		c
+	);
 
+	// Determine if a cell is the goal cell (via referenec comparison)
+	bool IsGoalCell
+	(
+		Cell*
+	);
+
+	// Determine if a cell is the goal cell (via referenec comparison)
 	bool IsGoalCell
 	(
 		int r,
 		int c
 	);
 
-
-	void SwapStartingAndGoal
-	(
-		void
-	);
-
-
+	// Pass in a static function pointer to exceute the function on each cell of the maze
 	void Map
 	(
-		void (*func)(cell*)
+		void (*func)(Cell*)
 	);
 
+	// Once the maze has been solved we need to go back to the start cell.
+	void SwapStartingAndGoal(void);
 
-	char* ToString
-	(
-		void
-	);
+	// swap the row and column of every cell in the maze.
+	void Transpose(void);
 
+public: //fields
 
-	static void	ResetCellValue
-	(
-		cell*
-	);
-
-	static void	ResetCellData
-	(
-		cell*
-	);
-
+private: //methods
 
 private:
-
-	int		num_rows;
-	int		num_cols;
-	cell*	starting_cell;
-	cell*	goal_cell;
-	cell*** cell_index;
-
+	Cell*	starting_cell;
+	Cell*	goal_cell;
+	Cell*** cell_index;
 
 };
 
+
+#endif //MAZE_INCLUDED_H

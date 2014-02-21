@@ -1,24 +1,51 @@
+/****************************************************************************************
+* File: maze.cpp
+*
+* Description: Implementation of the maze class methods
+*
+* Created: 2/20/2014, by Richard Habeeb
+****************************************************************************************/
+
+/*---------------------------------------------------------------------------------------
+*                                       INCLUDES
+*--------------------------------------------------------------------------------------*/
 #include "maze.h"
 
+/*---------------------------------------------------------------------------------------
+*                                   LITERAL CONSTANTS
+*--------------------------------------------------------------------------------------*/
 
-maze::maze
-	(
-		int					num_rows, 
-		int					num_cols
-	) :
-	num_rows(num_rows),
-	num_cols(num_cols)
+/*---------------------------------------------------------------------------------------
+*                                        TYPES
+*--------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------
+*                                   MEMORY CONSTANTS
+---------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------
+*                                      VARIABLES
+*--------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------
+*                                    CLASS METHODS
+*--------------------------------------------------------------------------------------*/
+
+/*****************************************************************************
+* Function: Maze - Constructor
+*
+* Description: Initializes fields for new instance of Maze object.
+*****************************************************************************/
+Maze::Maze(void)
 {
-	
-	cell_index				= new cell**[num_rows];
+	cell_index = new Cell**[MAZE_NUM_ROWS];
 
-	for (int r = 0; r < num_rows; r++)
+	for (int r = 0; r < MAZE_NUM_ROWS; r++)
 	{
-		cell_index[r]= new cell*[num_cols];
-		for (int c = 0; c < num_cols; c++)
+		cell_index[r] = new Cell*[MAZE_NUM_COLS];
+		for (int c = 0; c < MAZE_NUM_COLS; c++)
 		{
-			cell_index[r][c] = new cell();
-			cell_index[r][c]->set_value(0);
+			cell_index[r][c] = new Cell();
 			cell_index[r][c]->set_visited(false);
 
 			if (c > 0)
@@ -32,137 +59,103 @@ maze::maze
 			}
 		}
 	}
-	Map(ResetCellValue);
-}
+} // Maze()
 
-
-
-maze::~maze
-	(
-		void
-	)
+/*****************************************************************************
+* Function: Maze - Destructor
+*
+* Description: calls the destructor for the first cell
+*****************************************************************************/
+Maze::~Maze(void)
 {
 	delete cell_index;
-}
+} // ~Maze()
 
-
-
-bool maze::is_valid_cell
-	(
-		int		r, 
-		int		c
-	)
-{
-	return (r < num_rows && r >= 0 && c < num_cols && c >= 0);
-}
-
-
-
-cell* maze::get_cell
+/*****************************************************************************
+* Function: get_cell
+*
+* Description: 
+*****************************************************************************/
+Cell* Maze::get_cell
 	(
 		int r,
 		int c
 	)
 {
-	if (is_valid_cell(r,c))
+	if (IsValidCell(r,c))
 		return cell_index[r][c];
 	else
 		return nullptr;
-}
+} // get_cell()
 
-
-
-bool maze::IsGoalCell
+/*****************************************************************************
+* Function: IsGoalCell
+*
+* Description:
+*****************************************************************************/
+bool Maze::IsGoalCell
 	(
 		int r,
 		int c
 	)
 {
 	return cell_index[r][c] == goal_cell;
-}
+} // IsGoalCell()
 
-
-
-bool maze::IsGoalCell
+/*****************************************************************************
+* Function: IsGoalCell
+*
+* Description:
+*****************************************************************************/
+bool Maze::IsGoalCell
 	(
-		cell* c
+		Cell* c
 	)
 {
 	return c == goal_cell;
-}
+} // IsGoalCell()
 
-
-
-void maze::SwapStartingAndGoal
-(
-	void
-)
-{
-	cell* t = starting_cell;
-	starting_cell = goal_cell;
-	goal_cell = t;
-}
-
-
-
-char* maze::ToString
+/*****************************************************************************
+* Function: IsValidCell
+*
+* Description: is this cell within the bounds of the maze
+*****************************************************************************/
+bool Maze::IsValidCell
 	(
-		void
+		int		r,
+		int		c
 	)
 {
-	char* s = new char[num_rows*(num_cols*(NUM_HEADINGS + 4) + 1)];
-	int write_index = 0;
-	char heading_names[] = "NESW";
+	return (r < MAZE_NUM_ROWS && r >= 0 && c < MAZE_NUM_COLS && c >= 0);
+}// IsValidCell()
 
-	for (int r = 0; r < num_rows; r++)
+/*****************************************************************************
+* Function: SwapStartingAndGoal
+*
+* Description:
+*****************************************************************************/
+void Maze::SwapStartingAndGoal(void)
+{
+	Cell* t			= starting_cell;
+	starting_cell	= goal_cell;
+	goal_cell		= t;
+} // SwapStartingAndGoal()
+
+/*****************************************************************************
+* Function: SwapStartingAndGoal
+*
+* Description:
+*****************************************************************************/
+void Maze::Map
+	(
+		void (*func)(Cell*)
+	)
+{
+	for (int r = 0; r < MAZE_NUM_ROWS; r++)
 	{
-		for (int c = 0; c < num_cols; c++)
-		{
-			for (heading h = north; h < NUM_HEADINGS; h++) 
-			{
-				s[write_index++] = (cell_index[r][c]->IsWall(h)) ? heading_names[h] : ' ';
-			}
-			s[write_index++] = (cell_index[r][c]->get_visited()) ? '!' : ' ';
-			s[write_index++] = '0' + cell_index[r][c]->get_value() / 10;
-			s[write_index++] = '0' + cell_index[r][c]->get_value() % 10;
-			s[write_index++] = IsGoalCell(r,c) ? '#' : '|';
-		}
-		s[write_index++] = '\n';
-	}
-	s[write_index] = '\0';
-	return s;
-}
-
-
-
-void maze::ResetCellValue
-	(
-		cell* c
-	)
-{
-	c->set_value(0);
-}
-
-
-void maze::ResetCellData
-(
-cell* c
-)
-{
-	c->set_value(0);
-}
-
-
-void maze::Map
-	(
-		void (*func)(cell*)
-	)
-{
-	for (int r = 0; r < num_rows; r++)
-	{
-		for (int c = 0; c < num_cols; c++)
+		for (int c = 0; c < MAZE_NUM_COLS; c++)
 		{
 			(*func)(cell_index[r][c]);
 		}
 	}
-}
+} // Map()

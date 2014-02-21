@@ -1,7 +1,42 @@
+/****************************************************************************************
+* File: cell.cpp
+*
+* Description: implementation of cell class methods
+*
+* Created: 2/20/2014, by Richard Habeeb
+****************************************************************************************/
+
+/*---------------------------------------------------------------------------------------
+*                                       INCLUDES
+*--------------------------------------------------------------------------------------*/
 #include "cell.h"
 
+/*---------------------------------------------------------------------------------------
+*                                   LITERAL CONSTANTS
+*--------------------------------------------------------------------------------------*/
 
-cell::cell(void)
+/*---------------------------------------------------------------------------------------
+*                                        TYPES
+*--------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------
+*                                   MEMORY CONSTANTS
+---------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------
+*                                      VARIABLES
+*--------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------
+*                                    CLASS METHODS
+*--------------------------------------------------------------------------------------*/
+
+/*****************************************************************************
+* Function: Cell - Constructor
+*
+* Description: Initializes fields for new instance of Cell object. 
+*****************************************************************************/
+Cell::Cell(void)
 {
 	visited = false;
 
@@ -9,44 +44,68 @@ cell::cell(void)
 	{
 		adjacent_cells[i] = nullptr;
 	}
-}
+} // Cell()
 
-
-cell::~cell(void)
+/*****************************************************************************
+* Function: Cell - Destructor
+*
+* Description:	This destructor actually will also call the destructor on 
+*				adjacent cells, so deleting a cell will delete the maze!!
+*****************************************************************************/
+Cell::~Cell(void)
 {
-	for (heading h = north; h < NUM_HEADINGS; h++)
+	for (heading_t h = north; h < NUM_HEADINGS; h++)
 	{
 		if (adjacent_cells[h] != nullptr)
 			delete[] adjacent_cells;
 	}		
-}
+} // ~Cell()
 
-
-bool cell::IsWall(heading h)
-{
-	return ( adjacent_cells[ h ] == nullptr );
-}
-
-
-void cell::set_wall( heading h )
+/*****************************************************************************
+* Function: set_wall
+*
+* Description:	Will set adjacent cell pointer to null and the adjacent
+*				cell's pointer to null.
+*****************************************************************************/
+void Cell::set_wall( heading_t h )
 {
 	if (!IsWall(h))
 	{
-		adjacent_cells[ h ]->adjacent_cells[ get_reverse_heading( h ) ] = nullptr;
+		adjacent_cells[ h ]->adjacent_cells[ GetReverseHeading( h ) ] = nullptr;
 		adjacent_cells[ h ] = nullptr;
 	}	
-}
+} // set_wall()
 
-
-cell* cell::get_adjacent_cell( heading h )
+/*****************************************************************************
+* Function: get_adjacent_cell
+*
+* Description:	getter
+*****************************************************************************/
+Cell* Cell::get_adjacent_cell( heading_t h )
 {
 	return adjacent_cells[ h ];
-}
+} // get_adjacent_cell()
 
-
-void cell::set_adjacent_cell( heading h, cell* c )
+/*****************************************************************************
+* Function: set_adjacent_cell
+*
+* Description:	Will assign pointer in adjacent cell in addition to this 
+*				cell.
+*****************************************************************************/
+void Cell::set_adjacent_cell( heading_t h, Cell* c )
 {
 	if(c != nullptr)
-		c->adjacent_cells[get_reverse_heading(h)] = this;
+		c->adjacent_cells[GetReverseHeading(h)] = this;
 	adjacent_cells[ h ] = c;
-}
+} // set_adjacent_cell()
+
+/*****************************************************************************
+* Function: IsWall
+*
+* Description:	If the adjacent cell pointer in a heading is null, then a
+*				wall exists
+*****************************************************************************/
+bool Cell::IsWall(heading_t h)
+{
+	return (adjacent_cells[h] == nullptr);
+} // IsWall()

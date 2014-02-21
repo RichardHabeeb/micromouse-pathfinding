@@ -1,49 +1,64 @@
-#pragma once
-#include "Heading.h"
+/****************************************************************************************
+* File: cell.h
+*
+* Description: Header file for cell.cpp
+*
+* Created: 2/20/2014, by Richard Habeeb
+****************************************************************************************/
+
+#ifndef CELL_INCLUDED_H
+#define CELL_INCLUDED_H
+
+/*---------------------------------------------------------------------------------------
+*                                       INCLUDES
+*--------------------------------------------------------------------------------------*/
+#include "heading.h"
+
+/*---------------------------------------------------------------------------------------
+*                                      CONSTANTS
+*--------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------
+*                                        TYPES
+*--------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------
+*                                       CLASSES
+*--------------------------------------------------------------------------------------*/
 
 
-class cell
+/******************************************************************************
+* Class: Cell
+*
+* Description: This class represents a cell in the maze. It contains info
+*				about adjacent cells, walls, etc...
+******************************************************************************/
+class Cell
 {
-public:
-	cell
-	(
-		void
-	);
-
-
-	~cell
-	(
-		void
-	);
+public: // methods
+	Cell(void);
+	~Cell(void);
 	
-
 	void set_wall
 	(
-		heading h
+		heading_t h
 	);
 
-
-	cell* get_adjacent_cell
+	Cell* get_adjacent_cell
 	(
-		heading
+		heading_t
 	);
-
 
 	void set_adjacent_cell
 	(
-		heading h,
-		cell* c
+		heading_t h,
+		Cell* c
 	);
 
-
-	bool get_visited
-	(
-		void
-	) const
+	bool get_visited(void) const
 	{
 		return visited;
 	}
-
 
 	void set_visited
 	(
@@ -53,33 +68,10 @@ public:
 		visited = v;
 	}
 
-
-	int	 get_value
-	(
-		void
-	) const
-	{
-		return value;
-	}
-
-
-	void set_value
-	(
-		short int v
-	)
-	{
-		value = v;
-	}
-
-
-	void* get_data
-		(
-		void
-		) const
+	void* get_data(void) const
 	{
 		return data;
 	}
-
 
 	void set_data
 		(
@@ -89,16 +81,22 @@ public:
 		data = d;
 	}
 
-
+	//Determine whether there is a wall in the given heading
 	bool IsWall
 	(
-		heading h
+		heading_t h
 	);
 
+public: // fields
 
-private:
-	cell*			adjacent_cells[4];
-	unsigned int	value;
+private: // methods
+
+private: // fields
+	Cell*			adjacent_cells[4];
 	void*			data;
 	bool			visited;
+
 };
+
+
+#endif //CELL_INCLUDED_H

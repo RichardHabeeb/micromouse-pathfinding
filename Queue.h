@@ -1,40 +1,71 @@
-#pragma once
+/****************************************************************************************
+* File: queue.h
+*
+* Description: Header file for maze.cpp
+*
+* Created: 2/20/2014, by Richard Habeeb
+****************************************************************************************/
+
+#ifndef QUEUE_INCLUDED_H
+#define QUEUE_INCLUDED_H
+
+/*---------------------------------------------------------------------------------------
+*                                       INCLUDES
+*--------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------
+*                                      CONSTANTS
+*--------------------------------------------------------------------------------------*/
 #define QUEUE_LENGTH 256 
 
+/*---------------------------------------------------------------------------------------
+*                                        TYPES
+*--------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------
+*                                       CLASSES
+*--------------------------------------------------------------------------------------*/
+
+/******************************************************************************
+* Class: Queue
+*
+* Description:	A non-exapanding implementation of a queue structure.
+*				(this should except on overflows)
+******************************************************************************/
 template <class T>
 class Queue
 {
-public:
-	Queue();
-	~Queue();
+public: // methods
 
+	Queue(void);
+	~Queue(void);
+	
+	unsigned int get_count(void) const
+	{
+		return count;
+	}
+
+	// add and element to the queue
 	Queue* Enqueue
-		(
+	(
 		T* item
-		);
+	);
 
-	T* Dequeue
-		(
-		void
-		);
+	// remove an element from the queue
+	T* Dequeue(void);
 
-	T* Peek
-		(
-		void
-		);
+	// return the top element of the queue
+	T* Peek(void);
 
-	Queue* Reset
-		(
-		void
-		);
+	// reset the queue pointers
+	Queue* Reset(void);
 
-	unsigned int get_count() const { return count; }
+public: // fields
 
-private:
+public: // methods
 
+private: // fields
 
-public:
-private:
 	T* elements[QUEUE_LENGTH];
 	unsigned int start;
 	unsigned int end;
@@ -42,32 +73,49 @@ private:
 
 };
 
+/*---------------------------------------------------------------------------------------
+*                                    CLASS METHODS
+*--------------------------------------------------------------------------------------*/
 
-
-
+/*****************************************************************************
+* Function: Queue - Constructor
+*
+* Description: Initializes fields for new instance of queue object.
+*****************************************************************************/
 template <class T> inline
 Queue<T>::Queue()
 {
 	Reset();
-}
+} // Queue()
 
-
+/*****************************************************************************
+* Function: Queue - Destructor
+*
+* Description: 
+*****************************************************************************/
 template <class T> inline
 Queue<T>::~Queue()
 {
-}
+} // ~Queue()
 
-
-
+/*****************************************************************************
+* Function: Enqueue
+*
+* Description: add and element to the queue
+*****************************************************************************/
 template <class T> inline
 Queue<T>* Queue<T>::Enqueue(T* item)
 {
 	elements[(start++)%QUEUE_LENGTH] = item;
 	count++;
 	return this;
-}
+} // Enqueue()
 
-
+/*****************************************************************************
+* Function: Dequeue
+*
+* Description: removed from the queue
+*****************************************************************************/
 template <class T> inline
 T* Queue<T>::Dequeue(void)
 {
@@ -80,9 +128,13 @@ T* Queue<T>::Dequeue(void)
 		count--;
 		return elements[(end++)%QUEUE_LENGTH];
 	}
-}
+} // Dequeue()
 
-
+/*****************************************************************************
+* Function: Peek
+*
+* Description: return the front element of the queue
+*****************************************************************************/
 template <class T> inline
 T* Queue<T>::Peek(void)
 {
@@ -94,10 +146,13 @@ T* Queue<T>::Peek(void)
 	{
 		return elements[(end)%QUEUE_LENGTH];
 	}
-}
+} // Peek()
 
-
-
+/*****************************************************************************
+* Function: Reset
+*
+* Description: reset all the indexes and the counter
+*****************************************************************************/
 template <class T> inline
 Queue<T>* Queue<T>::Reset(void)
 {
@@ -105,4 +160,6 @@ Queue<T>* Queue<T>::Reset(void)
 	end = 0;
 	count = 0;
 	return this;
-}
+} // Reset()
+
+#endif //QUEUE_INCLUDED_H

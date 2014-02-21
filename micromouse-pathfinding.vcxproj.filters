@@ -21,13 +21,13 @@
     <ClCompile Include="maze.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WeightedPathfinding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="cell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleFloodFill.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WeightedPathfinding.cpp">
+    <ClCompile Include="simplefloodfill.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,25 +35,25 @@
     <ClInclude Include="maze.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cell.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IPathFinding.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SimpleFloodFill.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WeightedPathfinding.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Queue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="util_math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Heading.h">
+    <ClInclude Include="cell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="heading.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ipathfinding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="simplefloodfill.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
