@@ -6,61 +6,14 @@ using namespace std;
 
 static const unsigned int longest_path = 16 * 16;
 
-void TestSimpleFloodFill();
-void TestWeightedPathFinding();
+void TestPathFinding(IPathFinding* ai, Maze* m);
 
 
 
 
 int main()
 {
-
-	TestSimpleFloodFill();
-	TestWeightedPathFinding();
-	
-
-	char a[256];
-	cin >> a;
-	return 0;
-}
-
-
-
-
-void TestSimpleFloodFill()
-{
-	maze* m = new maze(16, 16);
-	IPathFinding* ai = new SimpleFloodFill(m);
-	heading	paths[longest_path];
-
-
-	m->set_starting_cell(0, 0);
-	m->set_goal_cell(8, 8);
-	cout << m->ToString() << "\n";
-
-	unsigned int num_steps = ai->CalculateBestRoute(paths, (unsigned int)longest_path, 0, 0, north);
-
-	cout << m->ToString() << "\n";
-
-
-	for (unsigned int i = 0; i < num_steps; i++)
-	{
-		cout << ((paths[i] == north) ? "north" : ((paths[i] == east) ? "east" : ((paths[i] == south) ? "south" : "west")));
-		cout << endl;
-	}
-
-}
-
-
-
-void TestWeightedPathFinding()
-{
-	heading	paths[longest_path];
-	unsigned int num_steps;
-	maze* m						= new maze(16, 16);
-	IPathFinding* ai			= new WeightedPathfinding(m);
-
-
+	Maze* m = new Maze();
 
 	m->set_starting_cell(0, 0);
 	m->set_goal_cell(8, 8);
@@ -73,17 +26,31 @@ void TestWeightedPathFinding()
 	m->get_cell(3, 1)->set_wall(south);
 	m->get_cell(3, 2)->set_wall(south);
 
-	cout << m->ToString() << "\n";
+	TestPathFinding(new WeightedPathfinding(m), m);
+	
+
+	return 0;
+}
 
 
-	num_steps = ai->CalculateBestRoute(paths, (unsigned int)longest_path, 0, 0, north);
 
-	cout << ((WeightedPathfinding*)ai)->ToString() << "\n";
+void TestPathFinding
+	(
+		IPathFinding* ai,
+		Maze* m
+	)
+{
+	heading_t next_heading;
+	unsigned int num_steps_to_next_heading;
 
-	for (unsigned int i = 0; i < num_steps; i++)
-	{
-		cout << ((paths[i] == north) ? "north" : ((paths[i] == east) ? "east" : ((paths[i] == south) ? "south" : "west")));
-		cout << endl;
-	}
+	ai->FindNextPathSegment(3, 0, south, &next_heading, &num_steps_to_next_heading);
 
+	cout << ai->ToString() << "\n";
+
+	cout << "next_heading: " << next_heading << "\n";
+	cout << "num_steps_to_next_heading: " << num_steps_to_next_heading << "\n";
+
+
+	char a[256];
+	cin >> a;
 }

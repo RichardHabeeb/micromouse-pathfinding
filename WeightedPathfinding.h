@@ -1,67 +1,100 @@
-#pragma once
-#include "IPathFinding.h"
+/****************************************************************************************
+* File: simplefloodfill.h
+*
+* Description: Interface definition for pathfindign algos
+*
+* Created: 2/20/2014, by Richard Habeeb
+****************************************************************************************/
+
+#ifndef WEIGHTEDFLOODFILL_INCLUDED_H
+#define WEIGHTEDFLOODFILL_INCLUDED_H
+
+/*---------------------------------------------------------------------------------------
+*                                       INCLUDES
+*--------------------------------------------------------------------------------------*/
+#include "ipathfinding.h"
 #include "util_math.h"
-#include "Queue.h"
+#include "queue.h"
 
+/*---------------------------------------------------------------------------------------
+*                                   LITERAL CONSTANTS
+*--------------------------------------------------------------------------------------*/
 
-/***********************************************
- * Algorithm Constants 
- * (used for speedup estimates)
- ***********************************************/
+// Algorithm Constants
+// (used for speedup estimates)
 #define			STEP_WEIGHT			2
 #define			VISITED_STEP_WEIGHT	1
 #define			TURN_WEIGHT			4
 #define			INITIAL_WEIGHT		-1
 
-
-typedef struct 
+/*---------------------------------------------------------------------------------------
+*                                        TYPES
+*--------------------------------------------------------------------------------------*/
+typedef struct
 {
 	int					weight;
-	heading				robot_heading_sim;
-	cell*				prev_cell;
+	heading_t			robot_heading_sim;
+	Cell*				next_cell;
 } cell_data_t;
 
+/*---------------------------------------------------------------------------------------
+*                                       CLASSES
+*--------------------------------------------------------------------------------------*/
 
+/******************************************************************************
+* Class: SimpleFloodFill
+*
+* Description:
+******************************************************************************/
 class WeightedPathfinding :
 	public IPathFinding
 {
-public:
+public: //methods
 	WeightedPathfinding
 		(
-		maze* m
+		Maze* m
 		);
 
 	~WeightedPathfinding();
 
-	unsigned int CalculateBestRoute
+	// Compute the fastest route throught the maze
+	void FindNextPathSegment
 		(
-		heading*			path,
-		unsigned int		path_len,
-		unsigned int		robot_current_row,
-		unsigned int		robot_current_col,
-		heading				robot_current_heading
+		unsigned int		robot_current_row, // the current row of the robot
+		unsigned int		robot_current_col,  // the current col of the robot
+		heading_t			robot_current_heading, // the current heading of the robot
+		heading_t*			next_heading, //out param of the next heading to travel
+		unsigned int*		cells_to_travel // out param of the number of cells to travel in the given direction
 		);
 
+	//For debugging. Print the maze walls with cell data, will allocate memory on the heap
 	char* ToString
 		(void);
 
 
 private:
+	//allocate and assign cell data structs into all the cells of the maze
 	static void InitializeCellData
 		(
-		cell *
+		Cell *
 		);
 
+	//reset all cell data to the default weight
 	static void WeightedPathfinding::ResetCellData
 		(
-		cell *
+		Cell *
 		);
 
-public:
-private:
-	Queue<cell>		cell_q;
+public: // fields
+
+
+private: // methods
+private: // fields
+	Queue<Cell>		cell_q;
 	unsigned int	max_flood_depth;
-	maze*			m;
+	Maze*			m;
 	unsigned int	maze_max_dim;
+
 };
 
+#endif //WEIGHTEDFLOODFILL_INCLUDED_H

@@ -48,6 +48,9 @@ public:
 		unsigned int*		cells_to_travel // out param of the number of cells to travel in the given direction
 	) = 0;
 
+	//For debugging. Print the maze walls with cell data, will allocate memory on the heap
+	virtual char* ToString(void) = 0;
+
 };
 
 #endif // IPATHFINDING_INCLUDED_H

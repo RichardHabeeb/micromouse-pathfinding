@@ -18,7 +18,9 @@
 /*---------------------------------------------------------------------------------------
 *                                      CONSTANTS
 *--------------------------------------------------------------------------------------*/
-#define INITIAL_VALUE 0;
+#define INITIAL_VALUE 0
+#define MAX_FLOOD_DEPTH 256
+
 /*---------------------------------------------------------------------------------------
 *                                        TYPES
 *--------------------------------------------------------------------------------------*/
@@ -53,6 +55,9 @@ public: //methods
 		heading_t*			next_heading, //out param of the next heading to travel
 		unsigned int*		cells_to_travel // out param of the number of cells to travel in the given direction
 	);
+
+	char* ToString
+		(void);
 
 public: // fields
 
